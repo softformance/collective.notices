@@ -2,7 +2,7 @@
 import random
 
 from zope.interface import implements
-from zope.component import adapts, getUtility, getMultiAdapter
+from zope.component import getUtility, getMultiAdapter
 from zope.schema.fieldproperty import FieldProperty
 from zope.container.contained import Contained, NameChooser
 from zope.container.interfaces import INameChooser
@@ -78,6 +78,7 @@ class NoticeFactory(grok.Adapter):
 @grok.subscribe(INotice, IObjectAddedEvent)
 def noticeAdded(obj, event):
     storage = getUtility(INoticesStorage)
+    storage.catalog.index_doc(int(obj.__name__), obj)
 
 
 @grok.subscribe(INotice, IObjectModifiedEvent)

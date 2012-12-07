@@ -1,14 +1,10 @@
 
-from persistent import Persistent
-
 from BTrees.OOBTree import OOBTree
 
 from OFS.SimpleItem import SimpleItem
 
 from zope.interface import implements
-from zope.component import getUtility
 from zope.container.ordered import OrderedContainer
-from zope.location.interfaces import ILocation
 from zope.cachedescriptors.property import Lazy
 
 from .notice import Notice
@@ -35,3 +31,4 @@ class NoticesStorage(SimpleItem, OrderedContainer):
     @Lazy
     def catalog(self):
         return ICatalogFactory(self)()
+

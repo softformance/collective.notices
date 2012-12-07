@@ -44,4 +44,5 @@ setup(name='collective.notices',
       [z3c.autoinclude.plugin]
       target = plone
       """,
+      extras_require = {'test': ['plone.app.testing']}
       )

@@ -46,8 +46,11 @@ class ICatalogFactory(Interface):
     def __call__():
         """Create and return the Catalog.
         
-        @param return: zope.app.catalog.catalog.Catalog instance
+        @param return: zope.catalog.catalog.Catalog instance
         """
+
+
+class INoticesQuery(Interface): pass
 
 
 class INoticeFactory(Interface):
