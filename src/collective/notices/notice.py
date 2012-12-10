@@ -22,8 +22,6 @@ class Notice(SimpleItem, Contained):
 
     __name__ = u''
 
-    id = None
-
     active = FieldProperty(INotice['active'])
     
     effective_date = FieldProperty(INotice['effective_date'])
@@ -42,6 +40,10 @@ class Notice(SimpleItem, Contained):
         self.users_and_groups = users_and_groups
         self.effective_date = effective_date
         self.expiration_date = expiration_date
+    
+    @property
+    def id(self):
+        return self.__name__
 
 
 class NoticeNameChooser(grok.Adapter, NameChooser):

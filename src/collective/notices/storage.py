@@ -24,11 +24,9 @@ class NoticesStorage(SimpleItem, OrderedContainer):
         super(NoticesStorage, self).__init__()
         self._data = OOBTree()
     
-    @property
-    def id(self):
-        return '++notices++'
-    
     @Lazy
     def catalog(self):
         return ICatalogFactory(self)()
 
+    def Title(self):
+        return u'Notices'

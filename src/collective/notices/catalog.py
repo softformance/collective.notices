@@ -11,7 +11,6 @@ from zc.catalog.catalogindex import SetIndex, ValueIndex, DateTimeValueIndex
 from zope.index.interfaces import IIndexSort
 
 from five import grok
-import hurry.query
 
 from .interfaces import ICatalogFactory, INoticesStorage, INotice, INoticesQuery
 
@@ -30,6 +29,11 @@ class ResultSet:
         for uid in self.uids:
             obj = self.storage[unicode(uid)]
             yield obj
+    
+    def __getslice__(self, *args, **kwargs):
+        uids = self.uids.__getslice__(*args, **kwargs)
+        return self.__class__(uids, self.storage)
+        
 
 
 class NoticesQuery(grok.GlobalUtility):
@@ -37,25 +41,17 @@ class NoticesQuery(grok.GlobalUtility):
     grok.provides(INoticesQuery)
     
     @staticmethod
-    def AND(a, b):
-        if not b:
-            if not a:
-                return IFSet()
-            return a
-        if not a:
-            return IFSet()
-        _, res = weightedIntersection(a, b)
-        return res
+    def intersection(a, b):
+        if a and b:
+            _, res = weightedIntersection(a, b)
+            return res
+        return a or b or IFSet()
     
     @staticmethod
-    def OR(a, b):
-        if not b:
-            if not a:
-                return IFSet()
-            return a
-        if not a:
-            return IFSet()
-        return union(a, b)
+    def union(a, b):
+        if a and b:
+            return union(a, b)
+        return a or b or IFSet()
 
     def _apply(self, index, term):
         return index.apply(term) or IFSet()
@@ -71,24 +67,36 @@ class NoticesQuery(grok.GlobalUtility):
         storage = getUtility(INoticesStorage)
         catalog = storage.catalog
         
-        # filter out inactive items
-        
         active_index = catalog['active']
+        
+        all = IFSet(active_index.ids())
+        
+        # filter out inactive items
         
         result = self._apply(
             catalog['active'],
             dict(any_of=(True,))
         )
         
-        all = IFSet(active_index.ids())
+        # filter users and groups
+        
+        if users_and_groups:
+            
+            result = self.intersection(
+                result,
+                self._apply(
+                    catalog['users_and_groups'],
+                    dict(any_of=users_and_groups)
+                )
+            )
         
         # filter out items with effective_date > now
         
         effective_date_index = catalog['effective_date']
         
-        result = self.AND(
+        result = self.intersection(
             result,
-            self.OR(
+            self.union(
                 self._apply(effective_date_index, dict(between=(now,))),
                 difference(all, IFSet(effective_date_index.ids())) # None value
             )
@@ -98,9 +106,9 @@ class NoticesQuery(grok.GlobalUtility):
 
         expiration_date_index = catalog['expiration_date']
         
-        result = self.AND(
+        result = self.intersection(
             result,
-            self.OR(
+            self.union(
                 self._apply(expiration_date_index, dict(between=(None, now))),
                 difference(all, IFSet(expiration_date_index.ids())) # None value
             )

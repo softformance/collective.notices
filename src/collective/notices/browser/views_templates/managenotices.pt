@@ -1,0 +1,92 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/prefs_main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+
+<metal:main fill-slot="prefs_configlet_content"
+     tal:define="template_id string:@@manage;
+                 portal_url context/portal_url;">
+
+    <div metal:use-macro="context/global_statusmessage/macros/portal_message">
+        Portal status message
+    </div>
+
+    <div id="content">
+    
+        <h1 class="documentFirstHeading"
+            i18n:translate="heading_notices">Site Notices</h1>
+
+        <a href=""
+           class="link-parent"
+           tal:attributes="href string:$portal_url/plone_control_panel"
+           i18n:translate="label_up_to_plone_setup">
+          Up to Site Setup
+        </a>
+
+        <div id="add-notice-container">
+            <a id="add-notice"
+               tal:attributes="href string: $portal_url/++notices++/add">
+                Add notice
+            </a>
+        </div>
+
+        <div id="notices-container">
+            <div class="notice"
+                 tal:repeat="notice view/batch">
+                  <div class="notice-actions-container">
+                      <a class="notice-action"
+                         tal:attributes="href string: ${context/absolute_url}/${notice/id}/edit">
+                          Edit
+                      </a>
+                      <a class="notice-action"
+                         tal:attributes="href string: ${context/absolute_url}/${notice/id}/delete">
+                          Del
+                      </a>
+                  </div>
+                  <div class="notice-text" tal:content="structure notice/text/output"></div>
+                  <div class="visualClear"></div>
+                  <div class="notice-display-to">
+                      Display to: <span tal:content="python: ''.join(notice.users_and_groups) or 'ALL'"/>
+                  </div>
+            </div>
+        </div>
+        
+        <ul tal:replace="structure view/render_batch_navigation"></ul>
+
+    </div>
+    
+    <style>
+        #add-notice-container {
+            text-align: right;
+            clear: both;
+            margin-bottom: 1em;
+        }
+        .notice-actions-container {
+            float: right;
+        }
+        .notice-action {
+            display: block;
+        }
+        .notice {
+            border: 1px solid black;
+            margin-bottom: 1em;
+            padding: 1em;
+        }
+        #content .batch-navigation {
+            list-style-type: none;
+            text-align: center;
+        }
+        #content .batch-navigation li {
+            display: inline;
+        }
+    </style>
+
+</metal:main>
+</body>
+</html>
+

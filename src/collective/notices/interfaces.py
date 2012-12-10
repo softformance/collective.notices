@@ -17,14 +17,6 @@ class INoticesStorage(IOrderedContainer, IContainerNamesContainer): pass
 
 class INotice(form.Schema):
 
-    active = schema.Bool(title=u'Active', default=True)
-
-    form.widget(effective_date=DatetimeFieldWidget)
-    effective_date = schema.Datetime(title=u'Effective Date', required=False, default=None)
-    
-    form.widget(expiration_date=DatetimeFieldWidget)
-    expiration_date = schema.Datetime(title=u'Expiration Date', required=False, default=None)
-
     text = RichText(title=u"Text", required=True)
 
     form.widget(users_and_groups=AutocompleteMultiFieldWidget)
@@ -37,6 +29,14 @@ class INotice(form.Schema):
         required=False,
         default=[],
     )
+
+    form.widget(effective_date=DatetimeFieldWidget)
+    effective_date = schema.Datetime(title=u'Effective Date', required=False, default=None)
+    
+    form.widget(expiration_date=DatetimeFieldWidget)
+    expiration_date = schema.Datetime(title=u'Expiration Date', required=False, default=None)
+
+    active = schema.Bool(title=u'Active', default=True)
 
 
 class ICatalogFactory(Interface):

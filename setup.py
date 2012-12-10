@@ -38,7 +38,11 @@ setup(name='collective.notices',
           'zope.catalog',
           'zc.catalog',
           'plone.principalsource',
-          # -*- Extra requirements: -*-
+          'plone.directives.form',
+          'plone.app.textfield',
+          'plone.formwidget.autocomplete',
+          'plone.app.testing',
+          'plone.app.dexterity',
       ],
       entry_points="""
       [z3c.autoinclude.plugin]

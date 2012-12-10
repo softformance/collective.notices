@@ -8,7 +8,7 @@ from zope.publisher.interfaces.http import IHTTPRequest
 from zope.publisher.interfaces import IPublishTraverse, NotFound
 from zope.publisher.interfaces.browser import IBrowserPublisher
 from zope.publisher.interfaces.browser import IBrowserRequest
-from zope.container.traversal import ItemTraverser
+from zope.container.traversal import ItemTraverser, ContainerTraverser
 
 from five import grok
 
@@ -32,13 +32,13 @@ class NoticesNamespace(grok.MultiAdapter):
         self.request = request
 
     def traverse(self, name, ignore):
-        storage = getUtility(INoticesStorage)
-        if storage.__name__ != u'++notices++':
-            storage.__name__ = u'++notices++'
+        storage = aq_base(getUtility(INoticesStorage)).__of__(getSite())
+        if storage.__name__ != storage.id != u'++notices++':
+            storage.__name__ = storage.id = u'++notices++'
         return storage
 
 
-class NoticesStorageTraverser(ItemTraverser, grok.MultiAdapter):
+class NoticesStorageTraverser(ContainerTraverser, grok.MultiAdapter):
     """A traverser for INoticesStorage, that is acqusition-aware
     """
     
@@ -46,6 +46,9 @@ class NoticesStorageTraverser(ItemTraverser, grok.MultiAdapter):
     grok.provides(IBrowserPublisher)
 
     def publishTraverse(self, request, name):
-        ob = ItemTraverser.publishTraverse(self, request, name)
+        ob = ContainerTraverser.publishTraverse(self, request, name)
         return ob.__of__(self.context)
+
+    def browserDefault(self, request):
+        return self.context, ('@@manage',)
 
