@@ -92,32 +92,32 @@ class DeleteNotice(grok.View):
         return getSite().absolute_url() + '/++notices++'
 
 
+class HideNotice(grok.View):
+    
+    grok.context(ISiteRoot)
+    grok.require('zope2.View')
+    grok.name('hide-notice')
+
+    def render(self):
+        id = int(self.request.get('id', 0))
+        try:
+            hidden = set(json.loads(self.request.get('hidden-notices', '[]')))
+        except (TypeError, ValueError):
+            hidden = set()
+        if id:
+            hidden.add(id)
+            self.request.response.setCookie(
+                'hidden-notices', json.dumps(list(hidden))
+            )
+        return self.request.response.redirect(self.request['HTTP_REFERER'])
+
+
+
 class ManageNotices(grok.View):
     
     grok.context(INoticesStorage)
     grok.require('cmf.ManagePortal')
     grok.name('manage')
-
-    def getPrincipalIds(self):
-        
-        membership = getToolByName(self.context, 'portal_membership', None)
-        if membership is None or membership.isAnonymousUser():
-            return ()
-        
-        member = membership.getAuthenticatedMember()
-        if not member:
-            return ()
-        
-        groups = hasattr(member, 'getGroups') and member.getGroups() or []
-
-        # Ensure we get the list of ids - getGroups() suffers some acquision
-        # ambiguity - the Plone member-data version returns ids.
-
-        for group in groups:
-            if type(group) not in StringTypes:
-                return ()
-        
-        return [member.getId()] + groups
 
     @Lazy
     def notices(self):
@@ -125,7 +125,7 @@ class ManageNotices(grok.View):
 
     @Lazy
     def batch(self):
-        batch_size = 2
+        batch_size = 10
         page = int(self.request.get('page', '0'))
         return Batch(self.notices, start=page*batch_size, size=batch_size)
 

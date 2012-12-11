@@ -56,13 +56,9 @@ class NoticesQuery(grok.GlobalUtility):
     def _apply(self, index, term):
         return index.apply(term) or IFSet()
     
-    def all(self):
-        storage = getUtility(INoticesStorage)
-        return ResultSet(storage.keys(), storage)
-    
-    def filter(self, users_and_groups=None, **kwargs):
+    def filter(self, users_and_groups=None, excluded=None):
         
-        now = datetime.now()
+        now = datetime.utcnow()
         
         storage = getUtility(INoticesStorage)
         catalog = storage.catalog
@@ -82,11 +78,16 @@ class NoticesQuery(grok.GlobalUtility):
         
         if users_and_groups:
             
+            users_and_groups_index = catalog['users_and_groups']
+            
             result = self.intersection(
                 result,
-                self._apply(
-                    catalog['users_and_groups'],
-                    dict(any_of=users_and_groups)
+                self.union(
+                    self._apply(
+                        users_and_groups_index,
+                        dict(any_of=users_and_groups)
+                    ),
+                    difference(all, IFSet(users_and_groups_index.ids())) # None value
                 )
             )
         
@@ -113,6 +114,12 @@ class NoticesQuery(grok.GlobalUtility):
                 difference(all, IFSet(expiration_date_index.ids())) # None value
             )
         )
+        
+        # filter out excluded notices
+        
+        if excluded:
+            
+            result = difference(result, IFSet(excluded))
         
         return ResultSet(result, storage)
 

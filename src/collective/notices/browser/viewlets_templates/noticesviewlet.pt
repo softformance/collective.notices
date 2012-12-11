@@ -1,0 +1,27 @@
+
+<div id="notices-viewlet"
+     tal:define="portal_url context/@@plone_portal_state/portal_url">
+    <div class="notice"
+         tal:repeat="notice viewlet/notices">
+          <div class="notice-actions-container">
+              <a class="notice-action"
+                 tal:attributes="href string: ${portal_url}/@@hide-notice?id=${notice/id}">X</a>
+          </div>
+          <div class="notice-text" tal:content="structure notice/text/output"></div>
+          <div class="visualClear"></div>
+    </div>
+</div>
+    
+<style>
+    .notice-actions-container {
+        float: right;
+    }
+    .notice-action {
+        display: block;
+    }
+    .notice {
+        border-bottom: 1px solid black;
+        margin-bottom: 1em;
+        padding: 1em;
+    }
+</style>

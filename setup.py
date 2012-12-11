@@ -41,7 +41,6 @@ setup(name='collective.notices',
           'plone.directives.form',
           'plone.app.textfield',
           'plone.formwidget.autocomplete',
-          'plone.app.testing',
           'plone.app.dexterity',
       ],
       entry_points="""
