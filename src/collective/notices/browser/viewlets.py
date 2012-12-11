@@ -10,7 +10,7 @@ from plone.app.layout.viewlets.interfaces import IPortalTop
 
 from Products.CMFCore.utils import getToolByName
 
-from ..interfaces import INoticesQuery
+from ..interfaces import INoticesQuery, INoticesStorage
 
 
 class NoticesViewlet(grok.Viewlet):
@@ -23,7 +23,8 @@ class NoticesViewlet(grok.Viewlet):
     grok.viewletmanager(IPortalTop)
 
     def update(self):
-        hidden = self.request.get('hidden-notices', '[]')
+        cookie_name = 'hidden-notices-' + self.cookieSuffix()
+        hidden = self.request.get(cookie_name, '[]')
         try:
             hidden = [id for id in json.loads(hidden) if isinstance(id, int)]
         except (ValueError, TypeError):
@@ -49,7 +50,14 @@ class NoticesViewlet(grok.Viewlet):
         # ambiguity - the Plone member-data version returns ids.
 
         for group in groups:
-            if type(group) not in StringTypes:
+            if not isinstance(group, basestring):
                 return ()
         
         return [member.getId()] + groups
+
+    def cookieSuffix(self):
+        membership = getToolByName(self.context, 'portal_membership', None)
+        member = membership.getAuthenticatedMember()
+        if not member:
+            return 'anonymous'
+        return member.getId() or 'unknown'

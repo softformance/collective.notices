@@ -1,7 +1,6 @@
 
 import sys
 import json
-from types import StringTypes
 
 from zope.interface import implements, alsoProvides
 from zope.component import getMultiAdapter
@@ -21,7 +20,11 @@ from five import grok
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.interfaces import ISiteRoot
+from Products.CMFCore.utils import getToolByName
 from Products.statusmessages.interfaces import IStatusMessage
+
+from zope.lifecycleevent import ObjectRemovedEvent
+from zope.event import notify
 
 from ..interfaces import INotice, INoticesStorage, INoticeFactory, INoticesQuery
 from ..catalog import ResultSet
@@ -84,6 +87,9 @@ class DeleteNotice(grok.View):
     grok.name('delete')
 
     def render(self):
+        event = ObjectRemovedEvent(self.context, self.context.__parent__,
+                                   self.context.__name__)
+        notify(event)
         del self.context.__parent__[self.context.__name__]
         IStatusMessage(self.request).addStatusMessage(u"Item deleted", "info")
         self.request.response.redirect(self.nextURL())
@@ -100,17 +106,23 @@ class HideNotice(grok.View):
 
     def render(self):
         id = int(self.request.get('id', 0))
+        cookie_name = 'hidden-notices-' + self.cookieSuffix()
         try:
-            hidden = set(json.loads(self.request.get('hidden-notices', '[]')))
+            hidden = set(json.loads(self.request.get(cookie_name, '[]')))
         except (TypeError, ValueError):
             hidden = set()
         if id:
             hidden.add(id)
-            self.request.response.setCookie(
-                'hidden-notices', json.dumps(list(hidden))
-            )
+            hidden = [id for id in hidden if unicode(id) in self.context.__parent__]
+            self.request.response.setCookie(cookie_name, json.dumps(hidden))
         return self.request.response.redirect(self.request['HTTP_REFERER'])
 
+    def cookieSuffix(self):
+        membership = getToolByName(self.context, 'portal_membership', None)
+        member = membership.getAuthenticatedMember()
+        if not member:
+            return 'anonymous'
+        return member.getId() or 'unknown'
 
 
 class ManageNotices(grok.View):

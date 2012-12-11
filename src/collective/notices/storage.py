@@ -30,3 +30,8 @@ class NoticesStorage(SimpleItem, OrderedContainer):
 
     def Title(self):
         return u'Notices'
+    
+    def reindex(self):
+        self.catalog.clear()
+        for obj in self.values():
+            self.catalog.index_doc(int(obj.__name__), obj)

@@ -92,4 +92,4 @@ def noticeModified(obj, event):
 @grok.subscribe(INotice, IObjectRemovedEvent)
 def noticeRemoved(obj, event):
     storage = getUtility(INoticesStorage)
-    storage.catalog.unindex_doc(int(obj.__name__), obj)
+    storage.catalog.unindex_doc(int(obj.__name__))

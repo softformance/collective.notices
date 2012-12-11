@@ -51,7 +51,7 @@
                   <div class="notice-text" tal:content="structure notice/text/output"></div>
                   <div class="visualClear"></div>
                   <div class="notice-display-to">
-                      Display to: <span tal:content="python: ''.join(notice.users_and_groups) or 'ALL'"/>
+                      Display to: <span tal:content="python: ', '.join(notice.users_and_groups) or 'ALL'"/>
                   </div>
             </div>
         </div>

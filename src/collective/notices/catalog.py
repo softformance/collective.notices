@@ -42,14 +42,14 @@ class NoticesQuery(grok.GlobalUtility):
     
     @staticmethod
     def intersection(a, b):
-        if a and b:
+        if a is not None and b is not None:
             _, res = weightedIntersection(a, b)
             return res
         return a or b or IFSet()
     
     @staticmethod
     def union(a, b):
-        if a and b:
+        if a is not None and b is not None:
             return union(a, b)
         return a or b or IFSet()
 
@@ -76,19 +76,28 @@ class NoticesQuery(grok.GlobalUtility):
         
         # filter users and groups
         
+        users_and_groups_index = catalog['users_and_groups']
+        
         if users_and_groups:
-            
-            users_and_groups_index = catalog['users_and_groups']
             
             result = self.intersection(
                 result,
                 self.union(
                     self._apply(
                         users_and_groups_index,
-                        dict(any_of=users_and_groups)
+                        dict(any_of=tuple(users_and_groups))
                     ),
                     difference(all, IFSet(users_and_groups_index.ids())) # None value
                 )
+            )
+        
+        else:
+            
+            # keep only global notices
+            
+            result = self.intersection(
+                result,
+                difference(all, IFSet(users_and_groups_index.ids())) # None value
             )
         
         # filter out items with effective_date > now
@@ -119,7 +128,9 @@ class NoticesQuery(grok.GlobalUtility):
         
         if excluded:
             
-            result = difference(result, IFSet(excluded))
+            excluded = self.intersection(all, IFSet(excluded))
+            
+            result = difference(result, excluded)
         
         return ResultSet(result, storage)
 
