@@ -3,7 +3,7 @@ import sys
 import json
 
 from zope.interface import implements, alsoProvides
-from zope.component import getMultiAdapter
+from zope.component import getUtility
 from zope import schema
 from zope.container.interfaces import INameChooser
 from zope.app.component.hooks import getSite
@@ -113,7 +113,8 @@ class HideNotice(grok.View):
             hidden = set()
         if id:
             hidden.add(id)
-            hidden = [id for id in hidden if unicode(id) in self.context.__parent__]
+            storage = getUtility(INoticesStorage)
+            hidden = [id for id in hidden if unicode(id) in storage]
             self.request.response.setCookie(cookie_name, json.dumps(hidden))
         return self.request.response.redirect(self.request['HTTP_REFERER'])
 
@@ -122,7 +123,7 @@ class HideNotice(grok.View):
         member = membership.getAuthenticatedMember()
         if not member:
             return 'anonymous'
-        return member.getId() or 'unknown'
+        return member.getId() or 'anonymous'
 
 
 class ManageNotices(grok.View):

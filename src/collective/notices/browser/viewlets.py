@@ -60,4 +60,4 @@ class NoticesViewlet(grok.Viewlet):
         member = membership.getAuthenticatedMember()
         if not member:
             return 'anonymous'
-        return member.getId() or 'unknown'
+        return member.getId() or 'anonymous'

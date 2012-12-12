@@ -1,6 +1,8 @@
 
 from datetime import datetime
 
+from dateutil.tz import gettz
+
 from BTrees.IFBTree import weightedIntersection, union, difference, IFSet
 
 from zope.interface import implements
@@ -39,98 +41,70 @@ class ResultSet:
 class NoticesQuery(grok.GlobalUtility):
 
     grok.provides(INoticesQuery)
-    
+
     @staticmethod
     def intersection(a, b):
-        if a is not None and b is not None:
-            _, res = weightedIntersection(a, b)
-            return res
-        return a or b or IFSet()
+        _, res = weightedIntersection(a or IFSet(), b or IFSet())
+        return res
     
     @staticmethod
     def union(a, b):
-        if a is not None and b is not None:
+        if a and b:
             return union(a, b)
         return a or b or IFSet()
 
-    def _apply(self, index, term):
-        return index.apply(term) or IFSet()
-    
+    difference = staticmethod(difference)
+
     def filter(self, users_and_groups=None, excluded=None):
         
-        now = datetime.utcnow()
-        
+        now = datetime.now(gettz())
         storage = getUtility(INoticesStorage)
         catalog = storage.catalog
         
+        # filter out inactive items
         active_index = catalog['active']
+        result = active_index.apply(dict(any_of=(True,))) or IFSet()
         
         all = IFSet(active_index.ids())
         
-        # filter out inactive items
-        
-        result = self._apply(
-            catalog['active'],
-            dict(any_of=(True,))
-        )
-        
-        # filter users and groups
-        
         users_and_groups_index = catalog['users_and_groups']
-        
         if users_and_groups:
-            
+            # filter users and groups
             result = self.intersection(
                 result,
                 self.union(
-                    self._apply(
-                        users_and_groups_index,
-                        dict(any_of=tuple(users_and_groups))
-                    ),
-                    difference(all, IFSet(users_and_groups_index.ids())) # None value
+                    users_and_groups_index.apply(dict(any_of=users_and_groups)),
+                    self.difference(all, IFSet(users_and_groups_index.ids())) # None value
                 )
             )
-        
         else:
-            
             # keep only global notices
-            
             result = self.intersection(
                 result,
-                difference(all, IFSet(users_and_groups_index.ids())) # None value
+                self.difference(all, IFSet(users_and_groups_index.ids())) # None value
             )
-        
-        # filter out items with effective_date > now
         
         effective_date_index = catalog['effective_date']
-        
         result = self.intersection(
             result,
             self.union(
-                self._apply(effective_date_index, dict(between=(now,))),
-                difference(all, IFSet(effective_date_index.ids())) # None value
+                effective_date_index.apply(dict(between=(None, now))), # date > now
+                self.difference(all, IFSet(effective_date_index.ids())) # None value
             )
         )
-
-        # filter out items with expiration_date < now
-
-        expiration_date_index = catalog['expiration_date']
         
+        expiration_date_index = catalog['expiration_date']
         result = self.intersection(
             result,
             self.union(
-                self._apply(expiration_date_index, dict(between=(None, now))),
-                difference(all, IFSet(expiration_date_index.ids())) # None value
+                expiration_date_index.apply(dict(between=(now,))), # date < now
+                self.difference(all, IFSet(expiration_date_index.ids())) # None value
             )
         )
         
         # filter out excluded notices
-        
         if excluded:
-            
-            excluded = self.intersection(all, IFSet(excluded))
-            
-            result = difference(result, excluded)
+            result = self.difference(result, IFSet(excluded))
         
         return ResultSet(result, storage)
 

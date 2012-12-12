@@ -3,7 +3,7 @@ import pytz
 
 from collective.z3cform.datetimewidget.converter import DatetimeDataConverter as BaseConverter
 
-from DateTime import DateTime
+from dateutil.tz import gettz
 
 
 class DatetimeDataConverter(BaseConverter):
@@ -12,5 +12,5 @@ class DatetimeDataConverter(BaseConverter):
         value = super(DatetimeDataConverter, self).toFieldValue(value)
         if value is not self.field.missing_value:
             if not getattr(value, 'tzinfo', None):
-                value = value.replace(tzinfo=pytz.timezone(DateTime().timezone()))
+                value = value.replace(tzinfo=gettz())
         return value

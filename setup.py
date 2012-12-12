@@ -42,6 +42,7 @@ setup(name='collective.notices',
           'plone.app.textfield',
           'plone.formwidget.autocomplete',
           'plone.app.dexterity',
+          'python-dateutil',
       ],
       entry_points="""
       [z3c.autoinclude.plugin]
