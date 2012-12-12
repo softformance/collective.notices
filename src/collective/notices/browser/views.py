@@ -26,8 +26,11 @@ from Products.statusmessages.interfaces import IStatusMessage
 from zope.lifecycleevent import ObjectRemovedEvent
 from zope.event import notify
 
-from ..interfaces import INotice, INoticesStorage, INoticeFactory, INoticesQuery
+from ..interfaces import INotice, INoticesStorage, INoticeFactory, INoticesQuery, INoticesLayer
 from ..catalog import ResultSet
+
+
+grok.layer(INoticesLayer)
 
 
 class AddNotice(form.SchemaAddForm):

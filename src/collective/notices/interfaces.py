@@ -11,6 +11,13 @@ from plone.app.textfield import RichText
 from plone.app.z3cform.widget import DatetimeWidget, DatetimeFieldWidget
 from plone.formwidget.autocomplete import AutocompleteMultiFieldWidget
 
+from plone.theme.interfaces import IDefaultPloneLayer
+
+
+class INoticesLayer(IDefaultPloneLayer):
+    """A layer specific for collective.notices.
+    """
+
 
 class INoticesStorage(IOrderedContainer, IContainerNamesContainer): pass
 

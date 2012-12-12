@@ -10,7 +10,10 @@ from plone.app.layout.viewlets.interfaces import IPortalTop
 
 from Products.CMFCore.utils import getToolByName
 
-from ..interfaces import INoticesQuery, INoticesStorage
+from ..interfaces import INoticesQuery, INoticesStorage, INoticesLayer
+
+
+grok.layer(INoticesLayer)
 
 
 class NoticesViewlet(grok.Viewlet):
