@@ -35,7 +35,6 @@ class ResultSet:
     def __getslice__(self, *args, **kwargs):
         uids = self.uids.__getslice__(*args, **kwargs)
         return self.__class__(uids, self.storage)
-        
 
 
 class NoticesQuery(grok.GlobalUtility):

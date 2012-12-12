@@ -23,6 +23,8 @@ class CollectiveNotices(PloneSandboxLayer):
         # Load ZCML
         import plone.principalsource
         self.loadZCML(package=plone.principalsource)
+        import plone.formwidget.autocomplete
+        self.loadZCML(package=plone.formwidget.autocomplete)
         import collective.notices
         xmlconfig.file('configure.zcml', 
                        collective.notices, 

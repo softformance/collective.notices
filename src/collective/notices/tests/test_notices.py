@@ -2,6 +2,8 @@
 
 from datetime import datetime, timedelta
 
+from dateutil.tz import gettz
+
 import unittest2 as unittest
 
 from zope.component import getUtility, getMultiAdapter
@@ -36,12 +38,15 @@ class TestNotices(unittest.TestCase):
         self.assertEquals(len(self.storage), 1)
 
     def test_query(self):
-        self.assertEquals(len(self.query.all()), 1)
+        self.assertEquals(len(self.storage), 1)
         import pytz
-        now = datetime.now().replace(tzinfo=pytz.timezone('US/Eastern'))
+        now = datetime.now().replace(tzinfo=gettz())
         self.add_test_data(
             dict(text=u'aaa', expiration_date=now-timedelta(10)),
             dict(text=u'bbb', effective_date=now+timedelta(10)),
             dict(text=u'ccc', expiration_date=now-timedelta(10), effective_date=now+timedelta(10)),
         )
-        self.assertEquals(len(self.query.filter()), 4)
+        L = list(self.query.filter())
+        self.assertEquals([x.text for x in L], ['blabla'])
+        L = list(self.query.filter(excluded=[int(L[0].__name__)]))
+        self.assertEquals(L, [])
