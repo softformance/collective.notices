@@ -1,7 +1,5 @@
-
-import pytz
-
-from collective.z3cform.datetimewidget.converter import DatetimeDataConverter as BaseConverter
+from collective.z3cform.datetimewidget.converter import DatetimeDataConverter \
+    as BaseConverter
 
 from dateutil.tz import gettz
 

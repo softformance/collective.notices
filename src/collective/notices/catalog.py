@@ -1,16 +1,13 @@
-
 from datetime import datetime
 
 from dateutil.tz import gettz
 
 from BTrees.IFBTree import weightedIntersection, union, difference, IFSet
 
-from zope.interface import implements
-from zope.component import adapts, getUtility, getMultiAdapter
-from zope.catalog.catalog import Catalog, ResultSet
+from zope.component import getUtility
+from zope.catalog.catalog import Catalog
 
 from zc.catalog.catalogindex import SetIndex, ValueIndex, DateTimeValueIndex
-from zope.index.interfaces import IIndexSort
 
 from five import grok
 

@@ -1,8 +1,7 @@
-
 import random
 
 from zope.interface import implements
-from zope.component import getUtility, getMultiAdapter
+from zope.component import getUtility
 from zope.schema.fieldproperty import FieldProperty
 from zope.container.contained import Contained, NameChooser
 from zope.container.interfaces import INameChooser

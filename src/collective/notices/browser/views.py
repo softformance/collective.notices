@@ -1,15 +1,11 @@
-
-import sys
 import json
 
-from zope.interface import implements, alsoProvides
 from zope.component import getUtility
-from zope import schema
 from zope.container.interfaces import INameChooser
 from zope.app.component.hooks import getSite
 from zope.cachedescriptors.property import Lazy
 
-from z3c.form import form, button, field
+from z3c.form import button
 from plone.directives import form
 
 from z3c.batching.batch import Batch
@@ -17,8 +13,6 @@ from plone.z3cform.crud.crud import BatchNavigation
 
 from five import grok
 
-from Products.Five import BrowserView
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
 from Products.statusmessages.interfaces import IStatusMessage
@@ -26,7 +20,8 @@ from Products.statusmessages.interfaces import IStatusMessage
 from zope.lifecycleevent import ObjectRemovedEvent
 from zope.event import notify
 
-from ..interfaces import INotice, INoticesStorage, INoticeFactory, INoticesQuery, INoticesLayer
+from ..interfaces import INotice, INoticesStorage, INoticeFactory, \
+    INoticesLayer
 from ..catalog import ResultSet
 
 

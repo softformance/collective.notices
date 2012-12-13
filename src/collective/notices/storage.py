@@ -1,4 +1,3 @@
-
 from BTrees.OOBTree import OOBTree
 
 from OFS.SimpleItem import SimpleItem
@@ -6,8 +5,6 @@ from OFS.SimpleItem import SimpleItem
 from zope.interface import implements
 from zope.container.ordered import OrderedContainer
 from zope.cachedescriptors.property import Lazy
-
-from .notice import Notice
 
 from .interfaces import INoticesStorage, ICatalogFactory
 

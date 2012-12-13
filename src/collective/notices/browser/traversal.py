@@ -1,13 +1,12 @@
-from zope.interface import implements
-from zope.component import adapts, getUtility, getMultiAdapter
+from zope.component import getUtility
 from zope.app.component.hooks import getSite
 
-from zope.traversing.interfaces import ITraversable, TraversalError
+from zope.traversing.interfaces import ITraversable
 from zope.publisher.interfaces.http import IHTTPRequest
-from zope.publisher.interfaces import IPublishTraverse, NotFound
+from zope.publisher.interfaces import NotFound
 from zope.publisher.interfaces.browser import IBrowserPublisher
 from zope.publisher.interfaces.browser import IBrowserRequest
-from zope.container.traversal import ItemTraverser, ContainerTraverser
+from zope.container.traversal import ContainerTraverser
 
 from five import grok
 

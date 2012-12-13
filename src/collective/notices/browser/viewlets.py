@@ -1,8 +1,7 @@
-
 import json
 
 from zope.interface import Interface
-from zope.component import getUtility, getMultiAdapter
+from zope.component import getUtility
 
 from five import grok
 
@@ -10,7 +9,7 @@ from plone.app.layout.viewlets.interfaces import IPortalTop
 
 from Products.CMFCore.utils import getToolByName
 
-from ..interfaces import INoticesQuery, INoticesStorage, INoticesLayer
+from ..interfaces import INoticesQuery, INoticesLayer
 
 
 grok.layer(INoticesLayer)

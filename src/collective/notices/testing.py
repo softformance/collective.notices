@@ -6,8 +6,6 @@ from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import FunctionalTesting
 
-from plone.testing import z2
-
 from zope.configuration import xmlconfig
 
 class CollectiveNotices(PloneSandboxLayer):

@@ -1,14 +1,12 @@
-
 from zope import schema
 from zope.interface import Interface
 
-from zope.container.interfaces import IOrderedContainer, IContainerNamesContainer
-
-from five import grok
+from zope.container.interfaces import IOrderedContainer, \
+    IContainerNamesContainer
 
 from plone.directives import form
 from plone.app.textfield import RichText
-from plone.app.z3cform.widget import DatetimeWidget, DatetimeFieldWidget
+from plone.app.z3cform.widget import DatetimeFieldWidget
 from plone.formwidget.autocomplete import AutocompleteMultiFieldWidget
 
 from plone.theme.interfaces import IDefaultPloneLayer
