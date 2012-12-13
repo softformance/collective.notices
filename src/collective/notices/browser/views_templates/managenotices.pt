@@ -75,9 +75,10 @@
                     </span>
                   </div>
             </fieldset>
+
+            <ul tal:replace="structure view/render_batch_navigation"></ul>
+
         </div>
-        
-        <ul tal:replace="structure view/render_batch_navigation"></ul>
 
     </div>
 
