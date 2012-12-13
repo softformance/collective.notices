@@ -1,8 +1,17 @@
 Changelog
 =========
 
-0.1dev (unreleased)
--------------------
+0.1 - Unreleased
+----------------
+
+- Added more docs.
+  [Vitaliy Podoba]
+
+- Added Period field to notices listing.
+  [Vitaliy Podoba]
+
+- Added initial functionality
+  [Vladimir Iliev]
 
 - Package created using zopeskel
-  []
+  [Vladimir Iliev]

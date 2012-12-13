@@ -16,17 +16,17 @@ long_description = (
 
 setup(name='collective.notices',
       version=version,
-      description="",
+      description="Adds Site-Wide Notification/Status Messages for Plone CMS",
       long_description=long_description,
       # Get more strings from
       # http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
         "Programming Language :: Python",
         ],
-      keywords='',
-      author='',
-      author_email='',
-      url='http://svn.plone.org/svn/collective/',
+      keywords='plone notification notice messages status',
+      author='Vitaliy Podoba',
+      author_email='vitaliypodoba@gmail.com',
+      url='https://github.com/vipod/collective.notices',
       license='gpl',
       packages=find_packages('src'),
       package_dir = {'': 'src'},
