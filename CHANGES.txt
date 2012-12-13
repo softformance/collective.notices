@@ -4,6 +4,9 @@ Changelog
 0.1 - Unreleased
 ----------------
 
+- Ajaxified hide notice action.
+  [Vitaliy Podoba]
+
 - Added more docs.
   [Vitaliy Podoba]
 
@@ -13,5 +16,5 @@ Changelog
 - Added initial functionality
   [Vladimir Iliev]
 
-- Package created using zopeskel
+- Package created using zopeskel.
   [Vladimir Iliev]

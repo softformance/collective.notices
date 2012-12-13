@@ -119,7 +119,11 @@ class HideNotice(grok.View):
             storage = getUtility(INoticesStorage)
             hidden = [id for id in hidden if unicode(id) in storage]
             self.request.response.setCookie(cookie_name, json.dumps(hidden))
-        return self.request.response.redirect(self.request['HTTP_REFERER'])
+
+        if self.request.form.get('ajax') == '1':
+            return 'success'
+        else:
+            return self.request.response.redirect(self.request['HTTP_REFERER'])
 
     def cookieSuffix(self):
         membership = getToolByName(self.context, 'portal_membership', None)
