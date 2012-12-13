@@ -60,8 +60,6 @@
                           tal:condition="ef_date">
                       From: <span tal:content="ef_date" />
                     </span>
-                    <span class="separator"
-                          tal:condition="python:ex_date and ef_date">-</span>
                     <span class="notice-display-to"
                           tal:condition="ex_date">
                       To: <span tal:content="ex_date" />
