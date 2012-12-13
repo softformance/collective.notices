@@ -1,0 +1,21 @@
+#notices-viewlet {
+  display: block;
+}
+#notices-viewlet .notice {
+  display: block;
+  position: relative;
+  background-color: #FFFFE3;
+  border: 1px solid #999966;
+  margin: 5px 0;
+  padding: 0.5em;
+  font-size: 12px;
+}
+#notices-viewlet .notice-actions-container {
+  position: absolute;
+  top: 0;
+  right: 3px;
+}
+#notices-viewlet .notice-action {
+  display: block;
+  font-size: 9px;
+}

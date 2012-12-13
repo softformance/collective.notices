@@ -11,17 +11,3 @@
           <div class="visualClear"></div>
     </div>
 </div>
-    
-<style>
-    .notice-actions-container {
-        float: right;
-    }
-    .notice-action {
-        display: block;
-    }
-    .notice {
-        border-bottom: 1px solid black;
-        margin-bottom: 1em;
-        padding: 1em;
-    }
-</style>
