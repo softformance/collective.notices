@@ -4,6 +4,9 @@ Changelog
 0.1 - Unreleased
 ----------------
 
+- Made calendar widget icon show up.
+  [Vitaliy Podoba]
+
 - Styled control panel.
   [Vitaliy Podoba]
 

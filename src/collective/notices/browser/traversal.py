@@ -1,4 +1,3 @@
-
 from zope.interface import implements
 from zope.component import adapts, getUtility, getMultiAdapter
 from zope.app.component.hooks import getSite
@@ -46,9 +45,13 @@ class NoticesStorageTraverser(ContainerTraverser, grok.MultiAdapter):
     grok.provides(IBrowserPublisher)
 
     def publishTraverse(self, request, name):
-        ob = ContainerTraverser.publishTraverse(self, request, name)
-        return ob.__of__(self.context)
+        try:
+            ob = ContainerTraverser.publishTraverse(self, request, name)
+        except NotFound:
+            # workaround to traverse to resources
+            return getattr(self.context.aq_parent, name)
+        else:
+            return ob.__of__(self.context)
 
     def browserDefault(self, request):
         return self.context, ('@@manage',)
-
