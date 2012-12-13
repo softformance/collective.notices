@@ -53,6 +53,24 @@
                   <div class="notice-display-to">
                       Display to: <span tal:content="python: ', '.join(notice.users_and_groups) or 'ALL'"/>
                   </div>
+                  <div class="notice-display-period"
+                       tal:define="ef_date notice/effective_date;
+                                   ex_date notice/expiration_date">
+                    <span class="notice-display-from"
+                          tal:condition="ef_date">
+                      From: <span tal:content="ef_date" />
+                    </span>
+                    <span class="separator"
+                          tal:condition="python:ex_date and ef_date">-</span>
+                    <span class="notice-display-to"
+                          tal:condition="ex_date">
+                      To: <span tal:content="ex_date" />
+                    </span>
+                    <span class="notice-display-to"
+                          tal:condition="python:not ex_date and not ef_date">
+                      Period: ALL THE TIME
+                    </span>
+                  </div>
             </div>
         </div>
         
