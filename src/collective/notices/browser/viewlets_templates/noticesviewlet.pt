@@ -4,7 +4,7 @@
     <div class="notice"
          tal:repeat="notice viewlet/notices">
           <div class="notice-actions-container">
-              <a class="notice-action"
+              <a class="notice-action notice-action-hide"
                  tal:attributes="href string: ${portal_url}/@@hide-notice?id=${notice/id}">X</a>
           </div>
           <div class="notice-text" tal:content="structure notice/text/output"></div>

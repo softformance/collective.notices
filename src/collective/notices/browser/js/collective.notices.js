@@ -1,7 +1,7 @@
 var dummy = function($) {
 
 function attachNoticeCloseLink() {
-  $('a.notice-action').click(function(event){
+  $('a.notice-action-hide').click(function(event){
     var link = $(event.target);
 
     // notify server

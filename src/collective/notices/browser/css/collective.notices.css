@@ -1,3 +1,4 @@
+/* Notices Viewlet Styles */
 #notices-viewlet {
   display: block;
 }
@@ -18,4 +19,40 @@
 #notices-viewlet .notice-action {
   display: block;
   font-size: 9px;
+}
+
+/* Notices Control Panel Styles */
+#add-notice-container {
+    text-align: right;
+    clear: both;
+    margin-bottom: 1em;
+}
+#notices-container .notice {
+    border-style: solid solid solid;
+}
+#notices-container .notice-text {
+  display: block;
+  width: 95%;
+  border: 1px solid #329FD7;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+#notices-container .notice-actions-container {
+    float: right;
+}
+#notices-container .notice-action {
+    display: block;
+}
+#notices-container .notice-display-users {
+  float: left;
+}
+#notices-container .notice-display-period {
+  float: right;
+}
+#notices-container .batch-navigation {
+    list-style-type: none;
+    text-align: center;
+}
+#notices-container .batch-navigation li {
+  display: inline;
 }
