@@ -53,7 +53,8 @@
                   <div class="visualClear"></div>
                   <div class="notice-display-users">
                       <strong>Display to:</strong>
-                      <span tal:content="python: ', '.join(notice.users_and_groups) or 'ALL USERS'"/>
+                      <span tal:define="users python:notice.users_and_groups or []"
+                            tal:content="python:', '.join(users) or 'ALL USERS'" />
                   </div>
                   <div class="notice-display-period"
                        tal:define="ef_date notice/effective_date;
