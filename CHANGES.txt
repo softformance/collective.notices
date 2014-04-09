@@ -1,8 +1,8 @@
 Changelog
 =========
 
-0.1 - Unreleased
-----------------
+1.0 - April 9, 2014
+-------------------
 
 - Made calendar widget icon show up.
   [Vitaliy Podoba]
