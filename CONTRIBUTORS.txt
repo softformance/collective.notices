@@ -1,2 +1,5 @@
+Contributors
+============
+
 - Vladimir Iliev, Original Author
-- Vitaliy Podoba, Contributor
+- Vitaliy Podoba, Contributor (contact@softformance.com)
