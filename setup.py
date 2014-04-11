@@ -6,9 +6,9 @@ version = '1.0'
 long_description = (
     open('README.txt').read()
     + '\n' +
-    open('CONTRIBUTORS.txt').read()
+    open('docs/CONTRIBUTORS.txt').read()
     + '\n' +
-    open('CHANGES.txt').read()
+    open('docs/CHANGES.txt').read()
     + '\n')
 
 setup(name='collective.notices',
