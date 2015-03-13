@@ -8,8 +8,8 @@ from zope.cachedescriptors.property import Lazy
 from z3c.form import button
 from plone.directives import form
 
-from z3c.batching.batch import Batch
-from plone.z3cform.crud.crud import BatchNavigation
+from plone.batching import Batch
+from plone.z3cform.crud.crud import CrudBatchView
 
 from five import grok
 
@@ -145,9 +145,6 @@ class ManageNotices(grok.View):
         return Batch(self.notices, start=page*batch_size, size=batch_size)
 
     def render_batch_navigation(self):
-        navigation = BatchNavigation(self.batch, self.request)
-        def make_link(page):
-            return "%s?page=%s" % (self.request.getURL(), page)
-        navigation.make_link = make_link
+        navigation = CrudBatchView(self.batch, self.request)
         return navigation()
 
