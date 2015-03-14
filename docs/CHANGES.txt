@@ -1,8 +1,8 @@
 Changelog
 =========
 
-Unreleased
-----------
+1.1 - (unreleased)
+-------------------
 
 - Plone 4.3 compatibile [sureshvv]
 
