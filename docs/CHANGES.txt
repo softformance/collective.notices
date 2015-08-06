@@ -4,7 +4,7 @@ Changelog
 Unreleased
 ----------
 
-- Plone 4.3 compatibile [sureshvv]
+- Plone 4.3 compatibility [sureshvv, fRiSi]
 
 1.0 - April 9, 2014
 -------------------
