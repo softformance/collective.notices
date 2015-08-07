@@ -20,6 +20,23 @@
   display: block;
   font-size: 9px;
 }
+#notices-viewlet .icon-hide:after {
+  content:"X";
+}
+/* Only display content to screen readers
+   see: http://a11yproject.com/posts/how-to-hide-content/
+   stolen from bootstrap
+*/
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
 
 /* Notices Control Panel Styles */
 #add-notice-container {

@@ -6,6 +6,10 @@ Unreleased
 
 - Plone 4.3 compatibility [sureshvv, fRiSi]
 
+- Improved markup for hide link: Added a descriptive text and allow to define
+  an icon via CSS) [fRiSI]
+
+
 1.0 - April 9, 2014
 -------------------
 
