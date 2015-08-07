@@ -18,8 +18,13 @@ function attachNoticeCloseLink() {
           return false;
         }
         
-        // remove notice
-        link.parents('.notice').remove();
+        // instead of simply removing the dom element we add a css class
+        // and defer it's removal to animation end.
+        // this allows integrators to use css transforms
+        link.parents('.notice').addClass('hidden')
+            .one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
+                $(this).remove();
+            });
         
         return true;
       },

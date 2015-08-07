@@ -7,11 +7,14 @@ Unreleased
 - Plone 4.3 compatibility [sureshvv, fRiSi]
 
 - Improved markup for hide link: Added a descriptive text and allow to define
-  an icon via CSS) [fRiSI]
+  an icon via CSS [fRiSI]
 
 - Indicate inactive notices in the management view [fRiSi]
 
 - Add i18n infrastructure and provide German translations [fRiSi]
+
+- Allow to use css3 animations when hiding notices [fRiSi]
+
 
 1.0 - April 9, 2014
 -------------------
