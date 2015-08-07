@@ -60,11 +60,18 @@
 #notices-container .notice-action {
     display: block;
 }
+#notices-container .notice-display-status {
+  float: left;
+  margin-right: 1em;
+}
 #notices-container .notice-display-users {
   float: left;
 }
 #notices-container .notice-display-period {
   float: right;
+}
+#notices-container .notice.inactive .state {
+  color: red;
 }
 #notices-container .batch-navigation {
     list-style-type: none;

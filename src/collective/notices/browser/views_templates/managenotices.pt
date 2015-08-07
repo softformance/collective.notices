@@ -36,8 +36,9 @@
         </div>
 
         <div id="notices-container">
+            <tal:notices repeat="notice view/batch">
             <fieldset class="notice"
-                      tal:repeat="notice view/batch">
+                tal:attributes="class python:notice.active and 'notice' or 'notice inactive'">
                   <legend>Notice</legend>
                   <div class="notice-actions-container">
                       <a class="notice-action"
@@ -51,6 +52,11 @@
                   </div>
                   <div class="notice-text" tal:content="structure notice/text/output"></div>
                   <div class="visualClear"></div>
+                  <div class="notice-display-status">
+                      <strong>Status: </strong>
+                      <span class="state"
+                          tal:content="python:notice.active and 'ACTIVE' or 'INACTIVE'" />
+                  </div>
                   <div class="notice-display-users">
                       <strong>Display to:</strong>
                       <span tal:define="users python:notice.users_and_groups or []"
@@ -76,7 +82,7 @@
                     </span>
                   </div>
             </fieldset>
-
+            </tal:notices>
             <ul tal:replace="structure view/render_batch_navigation"></ul>
 
         </div>
