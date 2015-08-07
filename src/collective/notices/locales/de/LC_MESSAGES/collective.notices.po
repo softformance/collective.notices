@@ -1,0 +1,114 @@
+# Harald Friessnegger <harald@webmeisterei.com>, 2015.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2015-08-07 11:41+0000\n"
+"PO-Revision-Date: 2015-08-07 13:43+0200\n"
+"Last-Translator: Harald Friessnegger <harald@webmeisterei.com>\n"
+"Language-Team: German <kde-i18n-de@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
+"Language: de\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: ./configure.zcml
+msgid "Display notices for users/groups who can mark them as read"
+msgstr ""
+"Hinweise für Benutzer/Gruppen anzeigen die diese nach dem Lesen ausblenden "
+"können."
+
+#: ./configure.zcml
+msgid "Notices"
+msgstr "Benachrichtigungen"
+
+#: collective/notices/profiles/default/controlpanel.xml
+msgid "Site Notices"
+msgstr "Benachrichtigungen"
+
+#. Default: "Delete"
+#: collective/notices/browser/views_templates/managenotices.pt:51
+msgid "action-delete"
+msgstr "Löschen"
+
+#. Default: "Edit"
+#: collective/notices/browser/views_templates/managenotices.pt:46
+msgid "action-edit"
+msgstr "Bearbeiten "
+
+#. Default: "Add notice"
+#: collective/notices/browser/views_templates/managenotices.pt:33
+msgid "add-notice"
+msgstr "Benachrichtigung hinzufügen"
+
+#. Default: "From:"
+#: collective/notices/browser/views_templates/managenotices.pt:86
+msgid "date-from"
+msgstr "Von"
+
+#. Default: "To:"
+#: collective/notices/browser/views_templates/managenotices.pt:91
+msgid "date-to"
+msgstr "Bis"
+
+#. Default: "All Users"
+#: collective/notices/browser/views_templates/managenotices.pt:78
+msgid "display-all-users"
+msgstr "Alle Benutzer"
+
+#. Default: "Always"
+#: collective/notices/browser/views_templates/managenotices.pt:97
+msgid "display-always"
+msgstr "Immer"
+
+#. Default: "Period:"
+#: collective/notices/browser/views_templates/managenotices.pt:96
+msgid "display-period"
+msgstr "Zeitraum "
+
+#. Default: "Status:"
+#: collective/notices/browser/views_templates/managenotices.pt:60
+msgid "display-sate"
+msgstr "Status"
+
+#. Default: "Display to:"
+#: collective/notices/browser/views_templates/managenotices.pt:74
+msgid "display-to"
+msgstr "Anzeigen für:"
+
+#. Default: "hide this notice"
+#: collective/notices/browser/viewlets_templates/noticesviewlet.pt:9
+msgid "hide-help-text"
+msgstr "Hinweis ausblenden"
+
+#. Default: "Hide"
+#: collective/notices/browser/viewlets_templates/noticesviewlet.pt:14
+msgid "hide-label"
+msgstr "Ausblenden"
+
+#. Default: "Notice"
+#: collective/notices/browser/views_templates/managenotices.pt:44
+msgid "notice-label"
+msgstr "Benachrichtigung"
+
+#. Default: "Site Notice Management"
+#: collective/notices/browser/views_templates/managenotices.pt:21
+msgid "notice-management-heading"
+msgstr "Benachrichtigungen verwalten"
+
+#. Default: "ACTIVE"
+#: collective/notices/browser/views_templates/managenotices.pt:61
+msgid "state-active"
+msgstr "Aktiv"
+
+#. Default: "INACTIVE"
+#: collective/notices/browser/views_templates/managenotices.pt:66
+msgid "state-inactive"
+msgstr "Deaktiviert"
+
+

@@ -11,6 +11,8 @@ Unreleased
 
 - Indicate inactive notices in the management view [fRiSi]
 
+- Add i18n infrastructure and provide German translations [fRiSi]
+
 1.0 - April 9, 2014
 -------------------
 

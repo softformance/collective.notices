@@ -4,7 +4,7 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en"
       metal:use-macro="context/prefs_main_template/macros/master"
-      i18n:domain="plone">
+      i18n:domain="collective.notices">
 
 <body>
 
@@ -19,18 +19,20 @@
     <div id="content">
     
         <h1 class="documentFirstHeading"
-            i18n:translate="heading_notices">Site Notices</h1>
+            i18n:translate="notice-management-heading">Site Notice Management</h1>
 
         <a href=""
            class="link-parent"
            tal:attributes="href string:$portal_url/plone_control_panel"
-           i18n:translate="label_up_to_plone_setup">
+           i18n:translate="label_up_to_plone_setup"
+           i18n:domain="plone">
           Up to Site Setup
         </a>
 
         <div id="add-notice-container">
             <a id="add-notice"
-               tal:attributes="href string: $portal_url/++notices++/add">
+               tal:attributes="href string: $portal_url/++notices++/add"
+               i18n:translate="add-notice">
                 Add notice
             </a>
         </div>
@@ -39,46 +41,60 @@
             <tal:notices repeat="notice view/batch">
             <fieldset class="notice"
                 tal:attributes="class python:notice.active and 'notice' or 'notice inactive'">
-                  <legend>Notice</legend>
+                  <legend i18n:translate="notice-label">Notice</legend>
                   <div class="notice-actions-container">
                       <a class="notice-action"
+                         i18n:translate="action-edit"
                          tal:attributes="href string: ${context/absolute_url}/${notice/id}/edit">
                           Edit
                       </a>
                       <a class="notice-action"
+                         i18n:translate="action-delete"
                          tal:attributes="href string: ${context/absolute_url}/${notice/id}/delete">
-                          Del
+                          Delete
                       </a>
                   </div>
                   <div class="notice-text" tal:content="structure notice/text/output"></div>
                   <div class="visualClear"></div>
                   <div class="notice-display-status">
-                      <strong>Status: </strong>
+                      <strong i18n:translate="display-sate">Status:</strong>
                       <span class="state"
-                          tal:content="python:notice.active and 'ACTIVE' or 'INACTIVE'" />
+                          tal:condition="notice/active"
+                          i18n:translate="state-active">
+                          ACTIVE
+                      </span>
+                      <span class="state"
+                          tal:condition="not: notice/active"
+                          i18n:translate="state-inactive">
+                          INACTIVE
+                      </span>
                   </div>
-                  <div class="notice-display-users">
-                      <strong>Display to:</strong>
-                      <span tal:define="users python:notice.users_and_groups or []"
-                            tal:content="python:', '.join(users) or 'ALL USERS'" />
+                  <div class="notice-display-users"
+                      tal:define="users python:notice.users_and_groups or []">
+                      <strong i18n:translate="display-to">Display to:</strong>
+                      
+                      <span tal:condition="users"
+                            tal:content="python:', '.join(users)" />
+                      <span tal:condition="not: users"
+                          i18n:translate="display-all-users">All Users</span>
                   </div>
                   <div class="notice-display-period"
                        tal:define="ef_date notice/effective_date;
                                    ex_date notice/expiration_date">
                     <span class="notice-display-from"
                           tal:condition="ef_date">
-                      <strong>From:</strong>
+                      <strong i18n:translate="date-from">From:</strong>
                       <span tal:content="ef_date" />
                     </span>
                     <span class="notice-display-to"
                           tal:condition="ex_date">
-                      <strong>To:</strong>
+                      <strong i18n:translate="date-to">To:</strong>
                       <span tal:content="ex_date" />
                     </span>
                     <span class="notice-display-to"
                           tal:condition="python:not ex_date and not ef_date">
-                      <strong>Period:</strong>
-                      ALL THE TIME
+                      <strong i18n:translate="display-period">Period:</strong>
+                      <span i18n:translate="display-always">Always</span>
                     </span>
                   </div>
             </fieldset>

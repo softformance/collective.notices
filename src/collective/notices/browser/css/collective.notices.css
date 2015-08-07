@@ -49,8 +49,9 @@
 }
 #notices-container .notice-text {
   display: block;
-  width: 95%;
-  border: 1px solid #329FD7;
+  width: 90%;
+  background-color: #FFFFE3;
+  border: 1px solid #999966;
   padding: 5px;
   margin-bottom: 10px;
 }

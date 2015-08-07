@@ -12,13 +12,15 @@
     <include package="plone.principalsource" />
     <include package=".browser" />
     
+    <i18n:registerTranslations directory="locales" />
+    
     <genericsetup:registerProfile
         name="default"
         title="Notices"
         directory="profiles/default"
-        description="Installs the Notices package"
+        description="Display notices for users/groups who can mark them as read"
         provides="Products.GenericSetup.interfaces.EXTENSION"
-        />
+        i18n:attributes="title description" />
     
     <genericsetup:registerProfile
       name="uninstall"
