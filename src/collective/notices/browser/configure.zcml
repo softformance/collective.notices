@@ -15,4 +15,9 @@
         name="collective.notices.css"
         />
 
+    <browser:resource
+        file="note.png"
+        name="collective.notices.note.png"
+        />
+
 </configure>
