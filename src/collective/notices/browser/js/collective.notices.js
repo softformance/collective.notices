@@ -2,8 +2,8 @@ var dummy = function($) {
 
 function attachNoticeCloseLink() {
   $('a.notice-action-hide').click(function(event){
-    var link = $(event.target);
-
+    var link = $(this);
+    
     // notify server
     $.ajax({
       'url': link.attr('href'),
