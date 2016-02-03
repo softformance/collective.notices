@@ -2,14 +2,14 @@ import json
 
 from zope.component import getUtility
 from zope.container.interfaces import INameChooser
-from zope.app.component.hooks import getSite
+from zope.component.hooks import getSite
 from zope.cachedescriptors.property import Lazy
 
 from z3c.form import button
 from plone.directives import form
 
+from plone.batching.browser import BatchView
 from plone.batching import Batch
-from plone.z3cform.crud.crud import CrudBatchView
 
 from five import grok
 
@@ -25,19 +25,20 @@ from ..interfaces import INotice, INoticesStorage, INoticeFactory, \
 from ..catalog import ResultSet
 
 
+
 grok.layer(INoticesLayer)
 
 
 class AddNotice(form.SchemaAddForm):
-    
+
     grok.context(INoticesStorage)
     grok.require('cmf.ManagePortal')
     grok.name('add')
-    
+
     schema = INotice
-    
+
     label = u"Add Notice"
-    
+
     def create(self, data):
         return INoticeFactory(self.context)(**data)
 
@@ -50,7 +51,7 @@ class EditNotice(form.SchemaEditForm):
     grok.context(INotice)
     grok.require('cmf.ManagePortal')
     grok.name('edit')
-    
+
     schema = INotice
 
     label = u"Edit Notice"
@@ -58,7 +59,7 @@ class EditNotice(form.SchemaEditForm):
     def __init__(self, *args, **kwargs):
         super(EditNotice, self).__init__(*args, **kwargs)
         self.request.set('disable_border', True)
-    
+
     @button.buttonAndHandler(u'Save', name='save')
     def handleApply(self, action):
         data, errors = self.extractData()
@@ -79,7 +80,7 @@ class EditNotice(form.SchemaEditForm):
 
 
 class DeleteNotice(grok.View):
-    
+
     grok.context(INotice)
     grok.require('cmf.ManagePortal')
     grok.name('delete')
@@ -97,7 +98,7 @@ class DeleteNotice(grok.View):
 
 
 class HideNotice(grok.View):
-    
+
     grok.context(ISiteRoot)
     grok.require('zope2.View')
     grok.name('hide-notice')
@@ -129,7 +130,7 @@ class HideNotice(grok.View):
 
 
 class ManageNotices(grok.View):
-    
+
     grok.context(INoticesStorage)
     grok.require('cmf.ManagePortal')
     grok.name('manage')
@@ -142,9 +143,13 @@ class ManageNotices(grok.View):
     def batch(self):
         batch_size = 10
         page = int(self.request.get('page', '0'))
-        return Batch(self.notices, start=page*batch_size, size=batch_size)
+        return Batch(self.notices, start=page * batch_size, size=batch_size)
 
     def render_batch_navigation(self):
-        navigation = CrudBatchView(self.batch, self.request)
-        return navigation()
+        navigation = BatchView(self.context, self.request)
+        def make_link(page):
+            return "%s?page=%s" % (self.request.getURL(), page - 1)
+        navigation.make_link = make_link
+
+        return navigation(self.batch)
 

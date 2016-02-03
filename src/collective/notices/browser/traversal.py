@@ -1,5 +1,5 @@
 from zope.component import getUtility
-from zope.app.component.hooks import getSite
+from zope.component.hooks import getSite
 
 from zope.traversing.interfaces import ITraversable
 from zope.publisher.interfaces.http import IHTTPRequest
@@ -20,7 +20,7 @@ from ..interfaces import INoticesStorage
 class NoticesNamespace(grok.MultiAdapter):
     """Used to traverse to a notice.
     """
-    
+
     grok.adapts(ISiteRoot, IHTTPRequest)
     grok.provides(ITraversable)
     grok.name('notices')
@@ -39,7 +39,7 @@ class NoticesNamespace(grok.MultiAdapter):
 class NoticesStorageTraverser(ContainerTraverser, grok.MultiAdapter):
     """A traverser for INoticesStorage, that is acqusition-aware
     """
-    
+
     grok.adapts(INoticesStorage, IBrowserRequest)
     grok.provides(IBrowserPublisher)
 

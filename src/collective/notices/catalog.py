@@ -28,11 +28,13 @@ class ResultSet:
         for uid in self.uids:
             obj = self.storage[unicode(uid)]
             yield obj
-    
+
     def __getslice__(self, *args, **kwargs):
         uids = self.uids.__getslice__(*args, **kwargs)
         return self.__class__(uids, self.storage)
 
+    def __getitem__(self, index):
+        return self.storage[self.uids[index]]
 
 class NoticesQuery(grok.GlobalUtility):
 
@@ -42,7 +44,7 @@ class NoticesQuery(grok.GlobalUtility):
     def intersection(a, b):
         _, res = weightedIntersection(a or IFSet(), b or IFSet())
         return res
-    
+
     @staticmethod
     def union(a, b):
         if a and b:
@@ -52,17 +54,17 @@ class NoticesQuery(grok.GlobalUtility):
     difference = staticmethod(difference)
 
     def filter(self, users_and_groups=None, excluded=None):
-        
+
         now = datetime.now(gettz())
         storage = getUtility(INoticesStorage)
         catalog = storage.catalog
-        
+
         # filter out inactive items
         active_index = catalog['active']
         result = active_index.apply(dict(any_of=(True,))) or IFSet()
-        
+
         all = IFSet(active_index.ids())
-        
+
         users_and_groups_index = catalog['users_and_groups']
         if users_and_groups:
             # filter users and groups
@@ -79,7 +81,7 @@ class NoticesQuery(grok.GlobalUtility):
                 result,
                 self.difference(all, IFSet(users_and_groups_index.ids())) # None value
             )
-        
+
         effective_date_index = catalog['effective_date']
         result = self.intersection(
             result,
@@ -88,7 +90,7 @@ class NoticesQuery(grok.GlobalUtility):
                 self.difference(all, IFSet(effective_date_index.ids())) # None value
             )
         )
-        
+
         expiration_date_index = catalog['expiration_date']
         result = self.intersection(
             result,
@@ -97,16 +99,16 @@ class NoticesQuery(grok.GlobalUtility):
                 self.difference(all, IFSet(expiration_date_index.ids())) # None value
             )
         )
-        
+
         # filter out excluded notices
         if excluded:
             result = self.difference(result, IFSet(excluded))
-        
+
         return ResultSet(result, storage)
 
 
 class CatalogFactory(grok.Adapter):
-    
+
     grok.context(INoticesStorage)
     grok.provides(ICatalogFactory)
 
