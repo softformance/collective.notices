@@ -2,8 +2,8 @@ var dummy = function($) {
 
 function attachNoticeCloseLink() {
   $('a.notice-action-hide').click(function(event){
-    var link = $(event.target);
-
+    var link = $(this);
+    
     // notify server
     $.ajax({
       'url': link.attr('href'),
@@ -18,8 +18,13 @@ function attachNoticeCloseLink() {
           return false;
         }
         
-        // remove notice
-        link.parents('.notice').remove();
+        // instead of simply removing the dom element we add a css class
+        // and defer it's removal to animation end.
+        // this allows integrators to use css transforms
+        link.parents('.notice').addClass('hidden')
+            .one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
+                $(this).remove();
+            });
         
         return true;
       },
