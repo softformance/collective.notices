@@ -4,13 +4,7 @@ Changelog
 1.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
-
-1.1 (2015-03-14)
-----------------
-
-- Plone 4.3 compatibility [sureshvv, fRiSi]
+- Plone 4.3 compatibility improved [fRiSi]
 
 - Improved markup for hide link: Added a descriptive text and allow to define
   an icon via CSS [fRiSI]
@@ -20,6 +14,12 @@ Changelog
 - Add i18n infrastructure and provide German translations [fRiSi]
 
 - Allow to use css3 animations when hiding notices [fRiSi]
+
+
+1.1 (2015-03-14)
+----------------
+
+- Plone 4.3 compatibility [sureshvv, fRiSi]
 
 
 1.0 - April 9, 2014
