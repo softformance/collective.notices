@@ -4,6 +4,10 @@ Changelog
 1.2 (unreleased)
 ----------------
 
+- Add Timezone-Information via property setter-method instead of overwriting the data converter
+  for all collective.z3cform.datetimewidget widgets (this fixes
+  `#4 <https://github.com/softformance/collective.notices/issues/4>`_) [fRiSi]
+
 - Plone 4.3 compatibility improved [fRiSi]
 
 - Improved markup for hide link: Added a descriptive text and allow to define

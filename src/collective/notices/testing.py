@@ -16,7 +16,7 @@ class CollectiveNotices(PloneSandboxLayer):
     MEMBER_PASSWORD = 'secret'
     MANAGER_USER_NAME = 'manager'
     MANAGER_USER_PASSWORD = 'secret'
-    
+
     def setUpZope(self, app, configurationContext):
         # Load ZCML
         import plone.principalsource
@@ -24,8 +24,8 @@ class CollectiveNotices(PloneSandboxLayer):
         import plone.formwidget.autocomplete
         self.loadZCML(package=plone.formwidget.autocomplete)
         import collective.notices
-        xmlconfig.file('configure.zcml', 
-                       collective.notices, 
+        xmlconfig.file('configure.zcml',
+                       collective.notices,
                        context=configurationContext)
 
     def setUpPloneSite(self, portal):
@@ -49,8 +49,8 @@ class CollectiveNotices(PloneSandboxLayer):
 
 COLLECTIVE_NOTICES_FIXTURE = CollectiveNotices()
 COLLECTIVE_NOTICES_INTEGRATION_TESTING = IntegrationTesting(
-    bases=(COLLECTIVE_NOTICES_FIXTURE,), 
+    bases=(COLLECTIVE_NOTICES_FIXTURE,),
     name="CollectiveNotices:Integration")
 COLLECTIVE_NOTICES_FUNCTIONAL_TESTING = FunctionalTesting(
-    bases=(COLLECTIVE_NOTICES_FIXTURE,), 
+    bases=(COLLECTIVE_NOTICES_FIXTURE,),
     name="CollectiveNotices:Functional")
