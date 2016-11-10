@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.2 (unreleased)
+1.2 (2016-11-10)
 ----------------
 
 - Add Timezone-Information via property setter-method instead of overwriting the data converter
