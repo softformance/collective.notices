@@ -19,6 +19,9 @@ setup(name='collective.notices',
       # http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
         "Programming Language :: Python",
+        "Programming Language :: Python :: 2.7",
+        "Framework :: Plone",
+        "Framework :: Plone :: 4.3",
         ],
       keywords='plone notification notice messages status',
       author='SoftFormance',
@@ -26,7 +29,7 @@ setup(name='collective.notices',
       url='https://github.com/softformance/collective.notices',
       license='gpl',
       packages=find_packages('src'),
-      package_dir = {'': 'src'},
+      package_dir={'': 'src'},
       namespace_packages=['collective'],
       include_package_data=True,
       zip_safe=False,
@@ -45,5 +48,5 @@ setup(name='collective.notices',
       [z3c.autoinclude.plugin]
       target = plone
       """,
-      extras_require = {'test': ['plone.app.testing']}
+      extras_require={'test': ['plone.app.testing']}
       )

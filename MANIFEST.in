@@ -1,4 +1,5 @@
 recursive-include src *
 recursive-include docs *
+include *.sh
 global-exclude *pyc
 global-exclude *mo
